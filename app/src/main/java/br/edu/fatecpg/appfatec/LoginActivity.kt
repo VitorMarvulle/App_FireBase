@@ -19,24 +19,24 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         binding.btnSair.setOnClickListener {
-            // Encerra a sessão do usuário
+            // Encerra a sessão
             auth.signOut()
-            // Redireciona para a MainActivity
+
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish() // Finaliza a LoginActivity
+            finish()
         }
 
         binding.btnExcluir.setOnClickListener {
-            // Excluir o usuário do Firebase Authentication
+            // Excluir o usuário do Firebase
             val user = auth.currentUser
             user?.delete()?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Usuário excluído com sucesso!", Toast.LENGTH_SHORT).show()
-                    // Redireciona para a MainActivity
+
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
-                    finish() // Finaliza a LoginActivity
+                    finish()
                 } else {
                     Toast.makeText(this, "Erro ao excluir usuário: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }

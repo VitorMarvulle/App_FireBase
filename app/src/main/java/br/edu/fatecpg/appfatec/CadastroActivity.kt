@@ -17,7 +17,7 @@ class CadastroActivity : AppCompatActivity() {
         binding = ActivityCadastroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance() // Certifique-se de usar getInstance()
+        auth = FirebaseAuth.getInstance()
 
         binding.btnCadastro.setOnClickListener {
             val email = binding.edtEmail.text.toString()
@@ -25,7 +25,7 @@ class CadastroActivity : AppCompatActivity() {
 
             if (email.isEmpty() || senha.isEmpty()) {
                 Toast.makeText(this, "Erro! Preencha todos os campos!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener // Retorna se os campos estiverem vazios
+                return@setOnClickListener
             }
 
             // Cria o usuário

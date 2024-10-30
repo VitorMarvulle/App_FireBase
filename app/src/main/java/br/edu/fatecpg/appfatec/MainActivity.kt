@@ -19,7 +19,25 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         binding.btnLogin.setOnClickListener {
-            // Lógica de login já existente...
+            val email = binding.edtEmail.text.toString()
+            val senha = binding.edtSenha.text.toString()
+
+            if (email.isEmpty() || senha.isEmpty()) {
+                Toast.makeText(this, "Erro! Preencha todos os campos!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            auth.signInWithEmailAndPassword(email, senha)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Sucesso! Login realizado.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Erro! ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
 
         binding.txtCadastro.setOnClickListener {
@@ -35,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Enviar email de redefinição de senha
+            // eviar email de redefinição de senha
             auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
